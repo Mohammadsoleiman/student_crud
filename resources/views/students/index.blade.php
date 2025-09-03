@@ -11,22 +11,24 @@ Student</a>
 <table class="table table-bordered">
 <thead>
 <tr>
-<th>ID</th>
+<th>#</th>
 <th>Name</th>
 <th>Email</th>
 <th>Phone</th>
 <th>Address</th>
+<th>University</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
 @foreach ($students as $student)
 <tr>
-<td>{{ $student->id }}</td>
+<td>{{$loop->iteration }}</td>
 <td>{{ $student->name }}</td>
 <td>{{ $student->email }}</td>
 <td>{{ $student->phone }}</td>
 <td>{{ $student->address }}</td>
+<td>{{ $student->university->name?? 'N/A' }}</td>
 <td>
 <a class="btn btn-info btn-sm"
 href="{{ route('students.show', $student) }}">Show</a>

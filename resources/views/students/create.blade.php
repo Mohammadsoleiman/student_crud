@@ -32,8 +32,21 @@
 <div class="alert alert-danger mt-1">{{ $message }}</div>
 
 @enderror
+<div class="mb-3">
+<label>University</label>
+<select name="university_id" class="form-control">
+<option value="">Select a University</option>
+@foreach ($universities as $university)
+<option value="{{ $university->id }}">{{ $university->name }}</option>
+@endforeach
+
+</select>
+@error('university_id')
+<div class="alert alert-danger mt-1">{{ $message }}</div>
+@enderror
+</div>
 </div>
 <button type="submit" class="btn btn-primary">Submit</button>
 <a class="btn btn-secondary" href="{{ route('students.index') }}">Back</a>
 </form>
-@endsection 
+@endsection

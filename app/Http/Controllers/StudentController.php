@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\University;
 
 class StudentController extends Controller
 {
@@ -12,7 +13,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::latest()->paginate(10);
+       $students = Student::with('university')->latest()->paginate(10);
 return view('students.index', compact('students'));
     }
 
@@ -21,7 +22,8 @@ return view('students.index', compact('students'));
      */
     public function create()
     {
-    return view('students.create');
+    $universities = University::all();
+return view('students.create', compact('universities'));
     }
 
     /**
@@ -34,6 +36,7 @@ return view('students.index', compact('students'));
 'email' => 'required|email|unique:students,email',
 'phone' => 'required|string|max:20',
 'address' => 'required|string|max:512',
+'university_id' => 'nullable|exists:univeities,id',
 ]);
 
 Student::create($request->all());
@@ -53,7 +56,8 @@ return view('students.show', compact('student'));
      */
  public function edit(Student $student)
 {
-return view('students.edit', compact('student'));
+$universities = University::all();
+return view('students.edit', compact('student','universities'));
 }
 
     /**
@@ -67,6 +71,7 @@ $request->validate([
 'email' => 'required|email|unique:students,email,' . $student->id,
 'phone' => 'required|string|max:20',
 'address' => 'required|string|max:512',
+'university_id' => 'nullable|exists:univeities,id',
 ]);
 
 $student->update($request->all());
